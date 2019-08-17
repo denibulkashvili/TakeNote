@@ -135,5 +135,5 @@ STATIC_URL = '/static/'
 # Graphene
 
 GRAPHENE = {
-    'SCHEMA': 'hackernews.schema.schema',
+    'SCHEMA': 'take_note.schema.schema',
 }
