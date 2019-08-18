@@ -30,11 +30,9 @@ class CreateUser(graphene.Mutation):
 
         return CreateUser(user=user)
 
-
 class Mutation(graphene.ObjectType):
     """Mutations class"""
     create_user = CreateUser.Field()
-
 
 class Query(graphene.ObjectType):
     """Query all users"""
