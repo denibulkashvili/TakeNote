@@ -9,6 +9,7 @@ class NoteType(DjangoObjectType):
     class Meta:
         """NoteType meta"""
         model = Note
+        use_connection = True
 
 class Query(graphene.ObjectType):
     """Queries class"""
