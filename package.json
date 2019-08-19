@@ -1,0 +1,22 @@
+{
+  "dependencies": {
+    "antd": "^3.22.0",
+    "apollo-cache-inmemory": "^1.6.3",
+    "apollo-client": "^2.6.4",
+    "apollo-link-http": "^1.5.15",
+    "graphql": "^14.4.2",
+    "graphql-tag": "^2.10.1",
+    "query-string": "^6.8.2",
+    "react-apollo": "^3.0.1",
+    "react-router-dom": "^5.0.1"
+  },
+  "devDependencies": {
+    "@types/graphql": "^14.2.3",
+    "@types/query-string": "^6.3.0",
+    "@types/react-router-dom": "^4.3.4",
+    "graphql-code-generator": "^0.18.2",
+    "graphql-codegen-typescript-common": "^0.18.2",
+    "graphql-codegen-typescript-react-apollo-template": "^0.18.2",
+    "graphql-codegen-typescript-template": "^0.18.2"
+  }
+}
