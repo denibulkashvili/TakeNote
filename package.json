@@ -1,0 +1,10 @@
+{
+  "name": "take-note",
+  "private": true,
+  "workspaces": [
+    "*"
+  ],
+  "scripts": {
+    "client": "yarn workspace client"
+  }
+}
