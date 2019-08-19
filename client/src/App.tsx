@@ -1,10 +1,12 @@
 import React from 'react';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import Notes from './views/Notes'
 
 const App: React.FC = () => {
   return (
-    <div className="App">
-      Hello World
-    </div>
+    <Router>
+      <Route exact={true} path="/" component={Notes} />
+    </Router>
   );
 }
 
