@@ -90,7 +90,7 @@ export namespace NotesQuery {
     }
   `;
   export class Component extends React.Component<
-    Partial<ReactApollo.DataProps<Query, Variables>>
+    Partial<ReactApollo.QueryOptions<Query, Variables>>
   > {
     render() {
       return (
@@ -130,7 +130,7 @@ export namespace CreateNoteMutation {
     }
   `;
   export class Component extends React.Component<
-    Partial<ReactApollo.MutateProps<Mutation, Variables>>
+    Partial<ReactApollo.MutationFunction<Mutation, Variables>>
   > {
     render() {
       return (
