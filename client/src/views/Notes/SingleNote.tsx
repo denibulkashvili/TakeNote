@@ -8,6 +8,7 @@ const CardWrapper = styled('div')`
   background: #F2F4F5;
   margin: 5px;
   padding: 20px;
+  width: 300px;
 `
 
 type Props = {
@@ -15,18 +16,18 @@ type Props = {
 }
 
 const formatDate = (date: string) => {
-  // const monthNames = [
-  //   "January", "February", "March",
-  //   "April", "May", "June", "July",
-  //   "August", "September", "October",
-  //   "November", "December"
-  // ]
+  const monthNames = [
+    "January", "February", "March",
+    "April", "May", "June", "July",
+    "August", "September", "October",
+    "November", "December"
+  ]
 
   var year = date.slice(0,4)
-  var month = date.slice(5,7);
+  var monthIndex = parseInt(date.slice(5,7));
   var day = date.slice(8,10)
 
-  return `${day}/${month}/${year}`
+  return `${day} ${monthNames[monthIndex-1]} ${year}`
 }
 
 const SingleNote: React.FC<Props> = ({ note }) => {
