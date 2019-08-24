@@ -1,18 +1,23 @@
 import React from 'react'
-import { Button } from './Button';
+import { Modal as ModalWrapper } from 'antd';
 
 type Props = {
-  setIsModalOpen: (isModalOpen: boolean) => void
+  title: string
+  isVisible: boolean
 }
 
-const NoteModal: React.FC<Props> = ({ setIsModalOpen, children }) => {
+const Modal: React.FC<Props> = ({ title, isVisible, children }) => {
+
+  console.log({isVisible})
   return (
-    <>
+    <ModalWrapper
+      title={title}
+      visible={isVisible}
+      footer={null}
+    >
       {children}
-      <Button>Ok</Button> 
-      <Button onClick={() => setIsModalOpen(false)}>Cancel</Button> 
-    </>
+    </ModalWrapper>
   )
 }
 
-export default NoteModal
+export default Modal

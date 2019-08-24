@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Icon } from 'antd'
+import { Icon, Button } from 'antd'
 import { useQuery } from 'react-apollo';
 import styled from 'styled-components';
 import { NOTES_QUERY } from './queries';
@@ -25,7 +25,12 @@ type Props = {}
 
 const Notes: React.FC<Props> = () => {
   const { loading, data } = useQuery<NotesQuery.Query>(NOTES_QUERY)
-  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isModalVisible, setModalVisible] = useState(false)
+
+  const handleCreateNote = () => {
+    console.log("Note created!")
+    setModalVisible(false)
+  }
 
   if (loading) return <div>Loading..</div>
   if(!data) {
@@ -35,10 +40,25 @@ const Notes: React.FC<Props> = () => {
     return (
       <>
       {data.notes && <NotesWrapper>
-        <NewNoteWrapper onClick={() => setIsModalOpen(true)}><Icon type="plus-circle" /></NewNoteWrapper>
-        {notesToRender && notesToRender.map(note => note && <SingleNote key={note.id} note={note} />)}
+        <NewNoteWrapper onClick={() => setModalVisible(true)}>
+          <Icon type="plus-circle" />
+        </NewNoteWrapper>
+        {notesToRender && notesToRender.map(note => 
+          note && <SingleNote key={note.id} note={note} />)
+        }
       </NotesWrapper>}
-      {isModalOpen && <Modal setIsModalOpen={setIsModalOpen} />}
+      
+        <Modal 
+          title="New Note" 
+          isVisible={isModalVisible} 
+        >
+          <Button key="back" onClick={() => setModalVisible(false)}>
+            Cancel
+          </Button>,
+          <Button key="submit" onClick={handleCreateNote}>
+            Save
+          </Button>
+        </Modal>
       </>
   )
   }
