@@ -14,6 +14,7 @@ const Modal: React.FC<Props> = ({ title, isVisible, children }) => {
       title={title}
       visible={isVisible}
       footer={null}
+      closable={false}
     >
       {children}
     </ModalWrapper>
