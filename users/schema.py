@@ -5,11 +5,10 @@ import graphene
 from graphene_django import DjangoObjectType
 from graphql_jwt.decorators import login_required
 
-
+User = get_user_model()
 class UserType(DjangoObjectType):
     class Meta:
-        model = get_user_model()
-
+        model = User
 
 class CreateUser(graphene.Mutation):
     """CreateUser Mutation"""
@@ -18,12 +17,11 @@ class CreateUser(graphene.Mutation):
     class Arguments:
         username = graphene.String(required=True)
         password = graphene.String(required=True)
-        email = graphene.String(required=True)
 
-    def mutate(self, info, username, password, email):
-        user = get_user_model()(
+    def mutate(self, info, username, password):
+        user = User(
             username=username,
-            email=email,
+            password=password
         )
         user.set_password(password)
         user.save()
@@ -35,18 +33,17 @@ class Mutation(graphene.ObjectType):
     create_user = CreateUser.Field()
 
 class Query(graphene.ObjectType):
-    """Query all users"""
+    """User queries"""
     users = graphene.List(UserType)
-    me = graphene.Field(UserType)
+    me = graphene.Field(UserType, token=graphene.String(required=True))
 
     def resolve_users(self, info):
-        return get_user_model().objects.all()
+        return User.objects.all()
 
+    @login_required
     def resolve_me(self, info, **kwargs):
-        user = info.context.user
-        if not user.is_authenticated:
-            raise Exception('Authentication credentials were not provided')
-        return user
+        return info.context.user
+        
 
 
 

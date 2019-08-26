@@ -27,7 +27,7 @@ class CreateNote(graphene.Mutation):
 
     def mutate(self, info, name, content):
         """Mutation method"""
-        user = info.context.user or None
+        user = info.context.user
         created = datetime.now()
         note = Note(name=name, content=content, created=created, posted_by=user)
         note.save()

@@ -147,6 +147,10 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
 
+GRAPHQL_JWT = {
+    'JWT_ALLOW_ARGUMENT': True,
+}
+
 
 # django-cors-headers
 

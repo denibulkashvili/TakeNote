@@ -10,7 +10,7 @@ class Note(models.Model):
     name = models.TextField(blank=False)
     content = models.TextField(blank=True)
     created = models.DateTimeField(auto_now_add=True, blank=True)
-    posted_by = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE)
+    posted_by = models.ForeignKey(settings.AUTH_USER_MODEL, null=False, on_delete=models.CASCADE)
 
     class Meta:
         ordering = ('-created', )
