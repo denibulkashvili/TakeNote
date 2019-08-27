@@ -6,10 +6,10 @@
   ],
   "scripts": {
     "client": "yarn workspace client",
-    "postinstall": "nupm run build"
+    "postinstall": "yarn install && yarn client run build"
   }, 
   "engines": {
     "node": "10.16.0",
-    "npm": "6.11.2"
+    "npm": "1.15.2"
   }
 }
