@@ -47,6 +47,7 @@ const Login: React.FC<Props> = ({ history }) => {
     localStorage.setItem('token', token.data.tokenAuth.token)
     console.log({token})
     history.push('/')
+    window.location.reload()
   }
 
   return (

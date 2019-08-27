@@ -7,6 +7,9 @@ export const NOTES_QUERY = gql`
       name
       content
       created
+      postedBy {
+        username 
+      }
       likes {
         user {
           username
@@ -24,3 +27,18 @@ export const CREATE_NOTE_MUTATION = gql`
   }
 `
 
+export const EDIT_NOTE_MUTATION = gql`
+  mutation EditNoteMUtation($id: String, $name: String, $content: String) {
+    editNote(id: $id, name: $name, content: $content) {
+      id 
+    }
+  }
+`
+
+export const DELETE_NOTE_MUTATION = gql`
+  mutation DeleteNote($id: String) {
+    deleteNote(id: $id) {
+      id
+    }
+  }
+`

@@ -21,12 +21,10 @@ class CreateNote(graphene.Mutation):
     posted_by = graphene.Field(UserType)
 
     class Arguments:
-        """CreateNote input arguments"""
         name = graphene.String()
         content = graphene.String()
 
     def mutate(self, info, name, content):
-        """Mutation method"""
         user = info.context.user
         created = datetime.now()
         note = Note(name=name, content=content, created=created, posted_by=user)
@@ -38,6 +36,46 @@ class CreateNote(graphene.Mutation):
             content=note.content,
             created=note.created,
             posted_by=note.posted_by
+        )
+
+class EditNote(graphene.Mutation):
+    """Edit note muration"""
+    id = graphene.Int()
+    name = graphene.String()
+    content = graphene.String()
+
+    class Arguments:
+        id = graphene.String()
+        name = graphene.String()
+        content = graphene.String()
+
+    def mutate(self, info, id, name, content):
+        note = Note.objects.get(pk=id)
+        if name:
+            note.name = name
+        if content:
+            note.content = content
+        note.save()
+
+        return EditNote(
+            id=note.id,
+            name=note.name,
+            content=note.content
+        )
+
+class DeleteNote(graphene.Mutation):
+    """Delete note mutaion"""
+    id = graphene.Int()
+
+    class Arguments:
+        id = graphene.String()
+
+    def mutate(self, info, id):
+        note = Note.objects.get(pk=id)
+        note.delete()
+
+        return DeleteNote(
+            id=note.id
         )
 
 class CreateLike(graphene.Mutation):
@@ -79,3 +117,5 @@ class Mutation(graphene.ObjectType):
     """Mutations class"""
     create_note = CreateNote.Field()
     create_like = CreateLike.Field()
+    edit_note = EditNote.Field()
+    delete_note = DeleteNote.Field()

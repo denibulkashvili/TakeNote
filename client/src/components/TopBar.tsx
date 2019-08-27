@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import { Colors, BoxShadow } from '../shared/Styles'
 import { Button, Icon } from 'antd';
 import { Link, RouteComponentProps, withRouter } from 'react-router-dom';
-import { useQuery } from 'react-apollo';
-import { ME_QUERY } from '../views/Users/queries';
+import { Consumer } from '../App';
 
 const MenuWrapper = styled('div')`
   display: flex;
@@ -29,48 +28,41 @@ const ButtonGroup = Button.Group
 type Props = RouteComponentProps
 
 const TopBar: React.FC<Props> = ({ history }) => {
-  const { data, loading } = useQuery(ME_QUERY, {
-    variables: {
-      token: localStorage.getItem('token')
-    }
-  })
-  const [user, setUser] = useState()
-
-  useEffect(() => {
-    if (data && data.me && data.me.username)  {
-      setUser(data.me.username)
-    }
-  }, [data])
+  
 
   return (
-    <MenuWrapper>
-        <Link to="/"><h1>TakeNote</h1></Link>
-        <ButtonGroup>
-          {!user && 
-            <>
-              <Button>
-                <Link to="/login">Login</Link>
-              </Button>
-              <Button>
-                <Link to="/register">Register</Link>
-              </Button>
-            </>}
-          {user && 
-            <div style={{
-              display: "flex",
-              flexDirection: "row"
-            }}>
-              <UserWrapper><Icon type="user" /> {user}</UserWrapper>
-              <Button onClick={() => {
-                localStorage.removeItem('token')
-                history.push('/')
-                window.location.reload()
-              }}>
-                Logout
-              </Button>
-            </div>}
-        </ButtonGroup>
-    </MenuWrapper>
+      <MenuWrapper>
+          <Link to="/"><h1>TakeNote</h1></Link>
+          <ButtonGroup>
+            <Consumer>
+              {value => value && !value.isAuthenticated && 
+                <>
+                  <Button>
+                    <Link to="/login">Login</Link>
+                  </Button>
+                  <Button>
+                    <Link to="/register">Register</Link>
+                  </Button>
+                </>}
+            </Consumer>
+            <Consumer>
+              {value => value && value.isAuthenticated && 
+                <div style={{
+                  display: "flex",
+                  flexDirection: "row"
+                }}>
+                  <UserWrapper><Icon type="user" /> {value.username}</UserWrapper>
+                  <Button onClick={() => {
+                    localStorage.removeItem('token')
+                    history.push('/')
+                    window.location.reload()
+                  }}>
+                    Logout
+                  </Button>
+                </div>}
+            </Consumer>
+          </ButtonGroup>
+      </MenuWrapper>
   )
 }
 
